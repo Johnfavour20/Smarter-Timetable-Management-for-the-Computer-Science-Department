@@ -1,0 +1,6 @@
+{
+  "name": "ChronosCS - Academic Timetabling System",
+  "description": "Enterprise-grade academic timetabling platform for the Computer Science Department, University of Port Harcourt.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
