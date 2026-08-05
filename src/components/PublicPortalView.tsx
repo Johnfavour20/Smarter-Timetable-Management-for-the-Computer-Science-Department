@@ -563,46 +563,7 @@ export const PublicPortalView: React.FC<PublicPortalViewProps> = ({ onBackToAdmi
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 text-slate-600 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="md:col-span-2 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 bg-[#004384] text-white rounded-lg flex items-center justify-center">
-                <School className="w-4 h-4" />
-              </div>
-              <span className="font-extrabold text-base text-[#004384] tracking-tight">Chronos CS</span>
-            </div>
-            <p className="text-xs text-slate-500 leading-relaxed max-w-md">
-              The official Timetable Portal for the Department of Computer Science, University of Port Harcourt. Designed to provide accurate, up-to-date scheduling information for students and faculty.
-            </p>
-            <p className="text-[11px] text-slate-400 pt-2">© 2026 Chronos CS. All rights reserved.</p>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <h4 className="font-bold text-slate-900">Quick Links</h4>
-            <ul className="space-y-1 text-slate-500">
-              <li><a href="#" onClick={(e) => { e.preventDefault(); showToast('Navigating to Home...'); }} className="hover:text-[#004384]">Home</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); showToast('Opening Student Guide...'); }} className="hover:text-[#004384]">Student Guide</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); showToast('Opening Faculty Portal...'); }} className="hover:text-[#004384]">Faculty Portal</a></li>
-              <li><a href="#" onClick={(e) => { e.preventDefault(); showToast('Opening Issue Reporter...'); }} className="hover:text-[#004384]">Report an Issue</a></li>
-            </ul>
-          </div>
-
-          <div className="space-y-2 text-xs">
-            <h4 className="font-bold text-slate-900">Contact Us</h4>
-            <p className="text-slate-500 flex items-center gap-2">
-              <MapPin className="w-3.5 h-3.5 text-slate-400" /> Ofrima Complex, UniPort Park
-            </p>
-            <p className="text-slate-500 flex items-center gap-2">
-              <Mail className="w-3.5 h-3.5 text-slate-400" /> info.cs@uniport.edu.ng
-            </p>
-            <p className="text-slate-500 flex items-center gap-2">
-              <Phone className="w-3.5 h-3.5 text-slate-400" /> +234 800 000 0000
-            </p>
-          </div>
-        </div>
-      </footer>
+      {/* Footer Removed as requested */}
     </div>
   );
 };

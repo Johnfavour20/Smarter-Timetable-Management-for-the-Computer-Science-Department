@@ -1,4 +1,4 @@
-export type Level = '100' | '200' | '300' | '400' | 'MSc' | 'PhD';
+export type Level = '100' | '200' | '300' | '400' | '500' | 'MSc' | 'PhD';
 export type Day = 'Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday';
 export type TimeSlot = '08:00 - 10:00' | '10:00 - 12:00' | '12:00 - 14:00' | '14:00 - 16:00' | '16:00 - 18:00';
 

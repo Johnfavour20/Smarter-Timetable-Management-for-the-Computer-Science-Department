@@ -20,24 +20,28 @@ import {
 } from '../data/mockData';
 
 const STORAGE_KEYS = {
-  COURSES: 'chronos_cs_courses_v1',
-  LECTURERS: 'chronos_cs_lecturers_v1',
-  VENUES: 'chronos_cs_venues_v1',
-  LEVELS: 'chronos_cs_levels_v1',
-  SESSIONS: 'chronos_cs_sessions_v1',
-  TIME_SLOTS: 'chronos_cs_timeslots_v1',
-  SCHEDULES: 'chronos_cs_schedules_v1',
-  PUBLISHED_SCHEDULES: 'chronos_cs_published_schedules_v1',
-  ACTIVITIES: 'chronos_cs_activities_v1',
-  SETTINGS: 'chronos_cs_settings_v1',
+  COURSES: 'chronos_cs_courses_v2',
+  LECTURERS: 'chronos_cs_lecturers_v2',
+  VENUES: 'chronos_cs_venues_v2',
+  LEVELS: 'chronos_cs_levels_v2',
+  SESSIONS: 'chronos_cs_sessions_v2',
+  TIME_SLOTS: 'chronos_cs_timeslots_v2',
+  SCHEDULES: 'chronos_cs_schedules_v2',
+  PUBLISHED_SCHEDULES: 'chronos_cs_published_schedules_v2',
+  ACTIVITIES: 'chronos_cs_activities_v2',
+  SETTINGS: 'chronos_cs_settings_v2',
 };
 
-// Helper for initial load with fallback
-function loadFromStorage<T>(key: string, defaultValue: T): T {
+// Helper for initial load with fallback and min-item auto-reseed
+function loadFromStorage<T>(key: string, defaultValue: T, minItems: number = 0): T {
   try {
     const item = localStorage.getItem(key);
     if (item) {
-      return JSON.parse(item);
+      const parsed = JSON.parse(item);
+      if (Array.isArray(parsed) && minItems > 0 && parsed.length < minItems) {
+        return defaultValue;
+      }
+      return parsed;
     }
   } catch (e) {
     console.warn(`[StorageService] Failed to parse key ${key}`, e);
@@ -55,16 +59,16 @@ function saveToStorage<T>(key: string, value: T): void {
 
 export const StorageService = {
   // Load initial states
-  loadCourses: (): Course[] => loadFromStorage(STORAGE_KEYS.COURSES, INITIAL_COURSES),
+  loadCourses: (): Course[] => loadFromStorage(STORAGE_KEYS.COURSES, INITIAL_COURSES, 10),
   saveCourses: (courses: Course[]) => saveToStorage(STORAGE_KEYS.COURSES, courses),
 
-  loadLecturers: (): Lecturer[] => loadFromStorage(STORAGE_KEYS.LECTURERS, INITIAL_LECTURERS),
+  loadLecturers: (): Lecturer[] => loadFromStorage(STORAGE_KEYS.LECTURERS, INITIAL_LECTURERS, 5),
   saveLecturers: (lecturers: Lecturer[]) => saveToStorage(STORAGE_KEYS.LECTURERS, lecturers),
 
-  loadVenues: (): Venue[] => loadFromStorage(STORAGE_KEYS.VENUES, INITIAL_VENUES),
+  loadVenues: (): Venue[] => loadFromStorage(STORAGE_KEYS.VENUES, INITIAL_VENUES, 5),
   saveVenues: (venues: Venue[]) => saveToStorage(STORAGE_KEYS.VENUES, venues),
 
-  loadLevels: (): LevelItem[] => loadFromStorage(STORAGE_KEYS.LEVELS, INITIAL_LEVELS),
+  loadLevels: (): LevelItem[] => loadFromStorage(STORAGE_KEYS.LEVELS, INITIAL_LEVELS, 4),
   saveLevels: (levels: LevelItem[]) => saveToStorage(STORAGE_KEYS.LEVELS, levels),
 
   loadSessions: (): AcademicSession[] => loadFromStorage(STORAGE_KEYS.SESSIONS, INITIAL_SESSIONS),
@@ -73,10 +77,10 @@ export const StorageService = {
   loadTimeSlots: (): TimeSlotConfig[] => loadFromStorage(STORAGE_KEYS.TIME_SLOTS, INITIAL_TIME_SLOTS),
   saveTimeSlots: (slots: TimeSlotConfig[]) => saveToStorage(STORAGE_KEYS.TIME_SLOTS, slots),
 
-  loadSchedules: (): ScheduleItem[] => loadFromStorage(STORAGE_KEYS.SCHEDULES, INITIAL_SCHEDULE),
+  loadSchedules: (): ScheduleItem[] => loadFromStorage(STORAGE_KEYS.SCHEDULES, INITIAL_SCHEDULE, 10),
   saveSchedules: (schedules: ScheduleItem[]) => saveToStorage(STORAGE_KEYS.SCHEDULES, schedules),
 
-  loadPublishedSchedules: (): ScheduleItem[] => loadFromStorage(STORAGE_KEYS.PUBLISHED_SCHEDULES, INITIAL_SCHEDULE),
+  loadPublishedSchedules: (): ScheduleItem[] => loadFromStorage(STORAGE_KEYS.PUBLISHED_SCHEDULES, INITIAL_SCHEDULE, 10),
   savePublishedSchedules: (schedules: ScheduleItem[]) => saveToStorage(STORAGE_KEYS.PUBLISHED_SCHEDULES, schedules),
 
   loadActivities: (): ActivityLog[] => loadFromStorage(STORAGE_KEYS.ACTIVITIES, INITIAL_ACTIVITIES),
