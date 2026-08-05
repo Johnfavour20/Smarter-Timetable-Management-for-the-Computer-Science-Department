@@ -50,6 +50,7 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
     users: 'User & Access Control',
     settings: 'Department Settings',
     schedules: 'Master Timetables',
+    review: 'Review Generated Timetable',
     export: 'Export & Share',
   };
 
@@ -141,15 +142,17 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
             </>
           ) : (
             <>
-              {/* Quick AI Generator trigger */}
-              <button
-                onClick={onOpenGenerator}
-                className="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5 active:scale-95 cursor-pointer"
-                title="AI Timetable Drafting Engine"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-slate-950" />
-                <span className="hidden sm:inline">AI Solver</span>
-              </button>
+              {/* Quick AI Generator trigger - hidden on published timetables page */}
+              {activeTab !== 'published' && (
+                <button
+                  onClick={onOpenGenerator}
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-950 text-xs font-extrabold px-3 py-1.5 rounded-xl transition-all shadow-xs flex items-center gap-1.5 active:scale-95 cursor-pointer"
+                  title="AI Timetable Drafting Engine"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-slate-950" />
+                  <span className="hidden sm:inline">AI Solver</span>
+                </button>
+              )}
 
               {/* Notifications Icon with Badge */}
               <button 

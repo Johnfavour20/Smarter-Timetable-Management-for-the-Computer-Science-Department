@@ -21,6 +21,8 @@ import { LecturersView } from './components/LecturersView';
 import { VenuesView } from './components/VenuesView';
 import { AcademicSessionsView } from './components/AcademicSessionsView';
 import { TimeSlotsView } from './components/TimeSlotsView';
+import { ReviewTimetable } from './components/ReviewTimetable';
+import { PublishedTimetables } from './components/PublishedTimetables';
 import { LevelsView } from './components/LevelsView';
 import { AIGeneratorModal } from './components/AIGeneratorModal';
 import { ExportModal } from './components/ExportModal';
@@ -37,7 +39,7 @@ import {
 } from 'lucide-react';
 
 export function App() {
-  const [viewMode, setViewMode] = useState<AppViewMode>('app'); // Default directly to app mode to immediately show the primary admin dashboard
+  const [viewMode, setViewMode] = useState<AppViewMode>('landing');
   const [activeTab, setActiveTab] = useState<AppTab>('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
@@ -371,6 +373,19 @@ export function App() {
                 />
               )}
 
+              {activeTab === 'review' && (
+                <ReviewTimetable
+                  schedules={schedules}
+                  courses={courses}
+                  lecturers={lecturers}
+                  venues={venues}
+                  onUpdateSchedule={handleUpdateSchedule}
+                  onDeleteSchedule={handleDeleteSchedule}
+                  onOpenGenerator={() => setIsGeneratorOpen(true)}
+                  onNavigateToSchedule={() => setActiveTab('schedules')}
+                />
+              )}
+
               {activeTab === 'courses' && (
                 <CoursesView
                   courses={courses}
@@ -433,6 +448,15 @@ export function App() {
                   onUpdateLevel={handleUpdateLevel}
                   onDeleteLevel={handleDeleteLevel}
                   searchQuery={searchQuery}
+                />
+              )}
+
+              {activeTab === 'published' && (
+                <PublishedTimetables
+                  sessions={sessions}
+                  onNavigateToSchedule={() => setActiveTab('schedules')}
+                  onOpenGenerator={() => setIsGeneratorOpen(true)}
+                  globalSearchQuery={searchQuery}
                 />
               )}
 

@@ -137,4 +137,5 @@ export type AppTab =
   | 'users' 
   | 'settings' 
   | 'schedules' 
+  | 'review'
   | 'export';
