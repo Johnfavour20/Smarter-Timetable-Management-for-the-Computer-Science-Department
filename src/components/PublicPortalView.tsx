@@ -77,7 +77,7 @@ export const PublicPortalView: React.FC<PublicPortalViewProps> = ({ onBackToAdmi
       )}
 
       {/* Header Bar */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-2xs">
+      <header className="bg-white border-b border-slate-200 static shadow-2xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <div className="w-11 h-11 bg-[#004384] text-white rounded-xl flex items-center justify-center shadow-md">
