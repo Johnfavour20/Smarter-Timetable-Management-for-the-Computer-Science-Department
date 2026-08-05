@@ -43,21 +43,39 @@ import {
   Sparkles
 } from 'lucide-react';
 
+import { StorageService } from './services/storage';
+
 export function App() {
   const [viewMode, setViewMode] = useState<AppViewMode>('landing');
   const [activeTab, setActiveTab] = useState<AppTab>('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [toastNotification, setToastNotification] = useState<string | null>(null);
 
-  // Domain state
-  const [courses, setCourses] = useState<Course[]>(INITIAL_COURSES);
-  const [lecturers, setLecturers] = useState<Lecturer[]>(INITIAL_LECTURERS);
-  const [venues, setVenues] = useState<Venue[]>(INITIAL_VENUES);
-  const [levels, setLevels] = useState<LevelItem[]>(INITIAL_LEVELS);
-  const [sessions, setSessions] = useState<AcademicSession[]>(INITIAL_SESSIONS);
-  const [timeSlots, setTimeSlots] = useState<TimeSlotConfig[]>(INITIAL_TIME_SLOTS);
-  const [schedules, setSchedules] = useState<ScheduleItem[]>(INITIAL_SCHEDULE);
-  const [activities, setActivities] = useState<ActivityLog[]>(INITIAL_ACTIVITIES);
+  // Domain state with local storage persistence
+  const [courses, setCourses] = useState<Course[]>(() => StorageService.loadCourses());
+  const [lecturers, setLecturers] = useState<Lecturer[]>(() => StorageService.loadLecturers());
+  const [venues, setVenues] = useState<Venue[]>(() => StorageService.loadVenues());
+  const [levels, setLevels] = useState<LevelItem[]>(() => StorageService.loadLevels());
+  const [sessions, setSessions] = useState<AcademicSession[]>(() => StorageService.loadSessions());
+  const [timeSlots, setTimeSlots] = useState<TimeSlotConfig[]>(() => StorageService.loadTimeSlots());
+  const [schedules, setSchedules] = useState<ScheduleItem[]>(() => StorageService.loadSchedules());
+  const [activities, setActivities] = useState<ActivityLog[]>(() => StorageService.loadActivities());
+
+  // Auto-persist changes to local storage
+  React.useEffect(() => { StorageService.saveCourses(courses); }, [courses]);
+  React.useEffect(() => { StorageService.saveLecturers(lecturers); }, [lecturers]);
+  React.useEffect(() => { StorageService.saveVenues(venues); }, [venues]);
+  React.useEffect(() => { StorageService.saveLevels(levels); }, [levels]);
+  React.useEffect(() => { StorageService.saveSessions(sessions); }, [sessions]);
+  React.useEffect(() => { StorageService.saveTimeSlots(timeSlots); }, [timeSlots]);
+  React.useEffect(() => { StorageService.saveSchedules(schedules); }, [schedules]);
+  React.useEffect(() => { StorageService.saveActivities(activities); }, [activities]);
+
+  const showSystemToast = (msg: string) => {
+    setToastNotification(msg);
+    setTimeout(() => setToastNotification(null), 3500);
+  };
 
   // Modal controls
   const [isGeneratorOpen, setIsGeneratorOpen] = useState(false);
@@ -257,6 +275,9 @@ export function App() {
   // AI Timetable Apply
   const handleApplyAISchedule = (newScheduleItems: ScheduleItem[]) => {
     setSchedules(newScheduleItems);
+    StorageService.savePublishedSchedules(newScheduleItems);
+    showSystemToast(`AI Solver generated & saved ${newScheduleItems.length} conflict-free course slots.`);
+    setActiveTab('schedules');
     setActivities((prev) => [
       {
         id: `act-${Date.now()}`,
@@ -485,7 +506,12 @@ export function App() {
               )}
 
               {activeTab === 'public-portal' && (
-                <PublicPortalView onBackToAdmin={() => setActiveTab('dashboard')} />
+                <PublicPortalView 
+                  onBackToAdmin={() => setActiveTab('dashboard')} 
+                  schedules={schedules}
+                  courses={courses}
+                  venues={venues}
+                />
               )}
 
               {activeTab === 'settings' && (
@@ -516,6 +542,14 @@ export function App() {
               )}
             </main>
           </div>
+        </div>
+      )}
+
+      {/* Global System Toast Notification */}
+      {toastNotification && (
+        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 border border-slate-700 animate-fadeIn">
+          <CheckCircle2 className="w-4.5 h-4.5 text-emerald-400 shrink-0" />
+          <span>{toastNotification}</span>
         </div>
       )}
 
