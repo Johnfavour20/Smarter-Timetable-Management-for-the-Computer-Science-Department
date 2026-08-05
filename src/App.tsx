@@ -23,6 +23,11 @@ import { AcademicSessionsView } from './components/AcademicSessionsView';
 import { TimeSlotsView } from './components/TimeSlotsView';
 import { ReviewTimetable } from './components/ReviewTimetable';
 import { PublishedTimetables } from './components/PublishedTimetables';
+import { ReportsView } from './components/ReportsView';
+import { UserManagementView } from './components/UserManagementView';
+import { ProfileView } from './components/ProfileView';
+import { SystemSettingsView } from './components/SystemSettingsView';
+import { PublicPortalView } from './components/PublicPortalView';
 import { LevelsView } from './components/LevelsView';
 import { AIGeneratorModal } from './components/AIGeneratorModal';
 import { ExportModal } from './components/ExportModal';
@@ -461,71 +466,50 @@ export function App() {
               )}
 
               {activeTab === 'reports' && (
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-                  <div className="flex justify-between items-center border-b border-slate-100 pb-4">
-                    <div>
-                      <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-                        <BarChart3 className="w-5 h-5 text-[#004384]" /> System Reports & Analytics
-                      </h2>
-                      <p className="text-xs text-slate-500">Audit reports, venue usage metrics, and lecturer workload breakdowns.</p>
-                    </div>
-                    <button onClick={() => setIsExportOpen(true)} className="px-3 py-1.5 bg-[#004384] text-white font-bold text-xs rounded-xl shadow-xs">
-                      Export Report (PDF)
-                    </button>
-                  </div>
-                  <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-2">
-                    <p className="font-bold text-slate-900">Current Semester Audit Summary:</p>
-                    <ul className="list-disc pl-5 space-y-1 text-slate-600">
-                      <li>Total Courses Scheduled: 42 (100% assigned with no unallocated slots)</li>
-                      <li>Average Venue Utilization: 79% (Optimal balance)</li>
-                      <li>Average Lecturer Workload: 8.8 hrs/week (Well under 12 hrs cap)</li>
-                      <li>Conflict Status: 0 Active Overlaps</li>
-                    </ul>
-                  </div>
-                </div>
+                <ReportsView
+                  sessions={sessions}
+                  lecturers={lecturers}
+                  venues={venues}
+                  courses={courses}
+                  schedules={schedules}
+                  globalSearchQuery={searchQuery}
+                />
               )}
 
               {activeTab === 'users' && (
-                <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
-                  <div className="flex justify-between items-center border-b border-slate-100 pb-4">
-                    <div>
-                      <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-                        <UserCog className="w-5 h-5 text-[#004384]" /> User Access Control
-                      </h2>
-                      <p className="text-xs text-slate-500">System administrators, department officers, and faculty viewer accounts.</p>
-                    </div>
-                  </div>
-                  <div className="space-y-2 text-xs">
-                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center">
-                      <div>
-                        <span className="font-bold text-slate-900">Dr. Chukwu</span>
-                        <span className="text-[10px] bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full ml-2 font-bold">Super Admin</span>
-                        <p className="text-slate-500 text-[11px]">Timetable Officer • Department of Computer Science</p>
-                      </div>
-                      <span className="text-emerald-600 font-bold">Active</span>
-                    </div>
-                  </div>
-                </div>
+                <UserManagementView globalSearchQuery={searchQuery} />
               )}
 
-              {(activeTab === 'settings' || activeTab === 'profile' || activeTab === 'help') && (
+              {activeTab === 'profile' && (
+                <ProfileView />
+              )}
+
+              {activeTab === 'public-portal' && (
+                <PublicPortalView onBackToAdmin={() => setActiveTab('dashboard')} />
+              )}
+
+              {activeTab === 'settings' && (
+                <SystemSettingsView />
+              )}
+
+              {activeTab === 'help' && (
                 <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
                   <div className="flex justify-between items-center border-b border-slate-100 pb-4">
                     <div>
                       <h2 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-                        <SettingsIcon className="w-5 h-5 text-[#004384]" /> Chronos CS Departmental Settings
+                        <SettingsIcon className="w-5 h-5 text-[#004384]" /> Chronos CS Help & Support Center
                       </h2>
-                      <p className="text-xs text-slate-500">Configure university constraints, algorithm priorities, and branding.</p>
+                      <p className="text-xs text-slate-500">Documentation, algorithm guides, and contact support.</p>
                     </div>
                   </div>
                   <div className="space-y-3 text-xs text-slate-700 max-w-lg">
                     <div className="p-3 rounded-xl border border-slate-200 space-y-1">
-                      <span className="font-bold text-slate-900 block">Department Name</span>
-                      <p className="text-slate-500">Department of Computer Science, University of Port Harcourt</p>
+                      <span className="font-bold text-slate-900 block">Department Support Email</span>
+                      <p className="text-slate-500">support.cs@uniport.edu.ng</p>
                     </div>
                     <div className="p-3 rounded-xl border border-slate-200 space-y-1">
-                      <span className="font-bold text-slate-900 block">Maximum Weekly Lecturer Hours</span>
-                      <p className="text-slate-500">12 Hours / Week (Hard Constraint)</p>
+                      <span className="font-bold text-slate-900 block">Timetable Generation Engine</span>
+                      <p className="text-slate-500">Powered by Gemini AI Constraint Satisfaction Solver (v2.4)</p>
                     </div>
                   </div>
                 </div>

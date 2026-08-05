@@ -67,6 +67,14 @@ export const LandingView: React.FC<LandingViewProps> = ({ onOpenSystem, onOpenAd
                 <ExternalLink className="w-4 h-4" />
               </button>
 
+              <button 
+                onClick={() => onOpenSystem('public-portal')}
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-5 py-3 rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer"
+              >
+                <Globe className="w-4 h-4 text-emerald-100" />
+                Public Timetable Portal
+              </button>
+
               {onOpenAdminSetup && (
                 <button 
                   onClick={onOpenAdminSetup}
@@ -76,14 +84,6 @@ export const LandingView: React.FC<LandingViewProps> = ({ onOpenSystem, onOpenAd
                   Admin Setup
                 </button>
               )}
-
-              <button 
-                onClick={() => onOpenSystem('schedules')}
-                className="bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-sm px-4 py-3 rounded-xl transition-all shadow-xs flex items-center gap-2 cursor-pointer"
-              >
-                <BookOpen className="w-4 h-4 text-slate-600" />
-                Documentation
-              </button>
             </div>
           </div>
 

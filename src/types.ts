@@ -135,7 +135,10 @@ export type AppTab =
   | 'published' 
   | 'reports' 
   | 'users' 
+  | 'profile'
+  | 'help'
   | 'settings' 
   | 'schedules' 
   | 'review'
-  | 'export';
+  | 'export'
+  | 'public-portal';

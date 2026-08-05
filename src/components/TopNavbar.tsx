@@ -48,10 +48,13 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
     published: 'Published Timetables',
     reports: 'System Reports & Analytics',
     users: 'User & Access Control',
+    profile: 'My Profile & Preferences',
+    help: 'Help & Documentation',
     settings: 'Department Settings',
     schedules: 'Master Timetables',
     review: 'Review Generated Timetable',
     export: 'Export & Share',
+    'public-portal': 'Public Timetable Portal',
   };
 
   return (
@@ -167,15 +170,16 @@ export const TopNavbar: React.FC<TopNavbarProps> = ({
 
               {/* Administrator Profile Pill */}
               <div 
-                onClick={() => setViewMode('admin-setup')}
+                onClick={() => setActiveTab('profile')}
                 className="flex items-center gap-2 bg-slate-100 hover:bg-slate-200/80 p-1 pl-1.5 pr-2.5 rounded-full border border-slate-200/80 transition-all cursor-pointer"
+                title="View My Profile & Settings"
               >
                 <div className="w-7 h-7 bg-[#004384] text-white rounded-full flex items-center justify-center text-xs font-bold shadow-2xs">
-                  DC
+                  EO
                 </div>
                 <div className="hidden sm:flex flex-col text-left">
-                  <span className="text-xs font-bold text-slate-900 leading-tight">Dr. Chukwu</span>
-                  <span className="text-[9px] text-slate-500 leading-none">Timetable Admin</span>
+                  <span className="text-xs font-bold text-slate-900 leading-tight">Dr. E. Oti</span>
+                  <span className="text-[9px] text-slate-500 leading-none">HOD • Computer Science</span>
                 </div>
                 <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
               </div>
